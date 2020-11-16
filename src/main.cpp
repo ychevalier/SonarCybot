@@ -118,21 +118,18 @@ void loop () {
 
   if (somethingRight && somethingLeft)
   {
-    // Serial.println("Detection Front");
+    Serial.println("Detection Front");
     back();
-    // reset();
   }
   else if (somethingRight)
   {
-    // Serial.println ("Detection Right");
+    Serial.println ("Detection Right");
     turnLeft();
-    // reset();
   }
   else if (somethingLeft)
   {
-    // Serial.println ("Detection Left");
+    Serial.println ("Detection Left");
     turnRight();
-    // reset();
   }
   else {
     forward();
