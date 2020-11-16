@@ -1,7 +1,12 @@
 /*
- * 1 - RH motor forwards. 2 - RH motor backwards. 3 - LH motor forwards.
- * 4 - LH motor backwards. 5 - 5 volts to uP
- * 6 - 6 volts
+ * Cybot Driver Unit
+ * 
+ * 1 - RH motor forwards. 
+ * 2 - RH motor backwards. 
+ * 3 - LH motor forwards.
+ * 4 - LH motor backwards. 
+ * 5 - 5 volts to uP.
+ * 6 - 6 volts.
  * 7 - ground.
  * 
  *  ------------------------------------------
@@ -9,6 +14,9 @@
  * -------------------------------------------
  * | D5  | D6  |  D7 |  D8 |     | 5V  | GND |
  * -------------------------------------------
+ * 
+ * Somehow, 5V isn't enough for Wemos D1 mini, you need the 6V pin.
+ * 
  */
 
 #include <Arduino.h>
