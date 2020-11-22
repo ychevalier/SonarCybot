@@ -23,7 +23,9 @@
 
 #include "DoubleSonar.h"
 #include "CybotMotors.h"
+
 #include "SerialLogger.h"
+#include "MultiLogger.h"
 
 #include "Thinker.h"
 
