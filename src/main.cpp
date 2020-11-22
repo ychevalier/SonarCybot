@@ -22,6 +22,14 @@
 #include <Arduino.h>
 #include <HCSR04.h>
 #include <Ultrasonic.h>
+#include <ESP8266WiFi.h>
+
+#include "Motors.h"
+#include "CybotMotors.h"
+
+// Network SSID
+#define SSID "Ruche"
+#define PASSWORD "zZuZ51F4N1MiZfv5"
 
 #define TRIG D3
 #define ECHO_LEFT D2
@@ -45,55 +53,14 @@ Ultrasonic distanceSensorLeftBis(TRIG, ECHO_LEFT);
 Ultrasonic distanceSensorRightBis(TRIG, ECHO_RIGHT);
 #endif
 
-void reset() {
-  digitalWrite(RH_FORWARD, LOW);
-  digitalWrite(RH_BACKWARD, LOW);
-  digitalWrite(LH_FORWARD, LOW);
-  digitalWrite(LH_BACKWARD, LOW);
-}
-
-void forward() {
-  Serial.println("Forward");
-  reset();
-  digitalWrite(RH_FORWARD, HIGH);
-  digitalWrite(LH_FORWARD, HIGH);
-}
-
-void turnLeft() {
-  Serial.println("Turn Left");
-  reset();
-  digitalWrite(RH_FORWARD, HIGH);
-  digitalWrite(LH_BACKWARD, HIGH);
-  delay(500);
-  reset();
-}
-
-void turnRight() {
-  Serial.println("Turn Right");
-  reset();
-  digitalWrite(LH_FORWARD, HIGH);
-  digitalWrite(RH_BACKWARD, HIGH);
-  delay(500);
-  reset();
-}
-
-void back() {
-  Serial.println("Back");
-  reset();
-  digitalWrite(LH_BACKWARD, HIGH);
-  digitalWrite(RH_BACKWARD, HIGH);
-  delay(1000);
-  reset();
-}
+CybotMotors motors(RH_FORWARD, RH_BACKWARD, LH_FORWARD, LH_BACKWARD);
 
 void setup () {
   Serial.begin(9600);
 
-  pinMode(RH_FORWARD, OUTPUT);
-  pinMode(RH_BACKWARD, OUTPUT);
-  pinMode(LH_FORWARD, OUTPUT);
-  pinMode(LH_BACKWARD, OUTPUT);
-  reset();
+  // Connect WiFi
+  WiFi.hostname("Robot");
+  WiFi.begin(SSID, PASSWORD);
 }
 
 void printDistance(double distanceRight, double distanceLeft) {
@@ -102,38 +69,49 @@ void printDistance(double distanceRight, double distanceLeft) {
   Serial.println(distanceLeft);
 }
 
-void loop () {
+void sense(int& distanceRight, int& distanceLeft) {
 #ifdef LIB_1
-  double distanceRight = distanceSensorRight.measureDistanceCm();
-  double distanceLeft = distanceSensorLeft.measureDistanceCm();
+  distanceRight = distanceSensorRight.measureDistanceCm();
+  distanceLeft = distanceSensorLeft.measureDistanceCm();
 #else
-  int distanceRight = distanceSensorRightBis.read();
-  int distanceLeft = distanceSensorLeftBis.read();
+  distanceRight = distanceSensorRightBis.read();
+  distanceLeft = distanceSensorLeftBis.read();
 #endif
+}
 
-  printDistance(distanceRight, distanceLeft);
-
+void doStuff(int distanceRight, int distanceLeft, Motors& myMotors) {
   bool somethingRight = distanceRight > 1 && distanceRight < MIN_DISTANCE;
   bool somethingLeft = distanceLeft > 1 && distanceLeft < MIN_DISTANCE;
 
   if (somethingRight && somethingLeft)
   {
     Serial.println("Detection Front");
-    back();
+    myMotors.back();
   }
   else if (somethingRight)
   {
     Serial.println ("Detection Right");
-    turnLeft();
+    myMotors.turnLeft();
   }
   else if (somethingLeft)
   {
     Serial.println ("Detection Left");
-    turnRight();
+    myMotors.turnRight();
   }
   else {
-    forward();
+    myMotors.forward();
   }
+}
+
+void loop () {
+  int distanceRight = 0;
+  int distanceLeft = 0;
+
+  sense(distanceRight, distanceLeft);
+
+  printDistance(distanceRight, distanceLeft);
+
+  doStuff(distanceRight, distanceLeft, motors);
   
   delay(500);
 }
