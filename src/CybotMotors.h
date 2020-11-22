@@ -1,9 +1,9 @@
 #ifndef CYBOTMOTORS_H
 #define CYBOTMOTORS_H
 
-#include "Motors.h"
+#include "actuator.h"
 
-class CybotMotors : public Motors {
+class CybotMotors : public Actuator {
 public:
   /**
    * @param rightForwardPin Digital pin that is used to enable right motor forward (OUTPUT)

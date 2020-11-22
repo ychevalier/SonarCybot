@@ -1,7 +1,7 @@
-#ifndef MOTORS_H
-#define MOTORS_H
+#ifndef ACTUATOR_H
+#define ACTUATOR_H
 
-class Motors {
+class Actuator {
 public:
   virtual void forward() = 0;
   virtual void back() = 0;
@@ -11,4 +11,4 @@ public:
   virtual void turnLeft() = 0;
 };
 
-#endif // MOTORS_H
+#endif // ACTUATOR_H
