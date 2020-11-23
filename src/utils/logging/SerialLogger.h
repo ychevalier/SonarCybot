@@ -1,7 +1,7 @@
 #ifndef SERIALLOGGER_H
 #define SERIALLOGGER_H
 
-#include "Logger.h"
+#include "utils/Logger.h"
 
 class SerialLogger : public Logger {
 public:

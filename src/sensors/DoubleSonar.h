@@ -1,7 +1,7 @@
 #ifndef DOUBLESONAR_H
 #define DOUBLESONAR_H
 
-#include "Sensor.h"
+#include "framework/Sensor.h"
 
 #include <Arduino.h>
 #include <HCSR04.h>

@@ -1,12 +1,9 @@
-#include "Thinker.h"
-
-#include <Arduino.h>
+#include "LocalThinker.h"
 
 #define MIN_DISTANCE 40
 
-Thinker::Thinker(Sensor* sensor, Actuator* actuator, Logger* logger)
-: sensor(sensor)
-, actuator(actuator)
+LocalThinker::LocalThinker(Sensor* sensor, Actuator* actuator, Logger* logger) 
+: Thinker(sensor, actuator)
 , logger(logger) {    
   // no op
 }
@@ -18,7 +15,7 @@ void printDistance(Logger* logger, double distanceRight, double distanceLeft) {
   logger->log("\n");
 }
 
-void Thinker::run()
+void LocalThinker::run()
 {
   sensor->acquire();
 

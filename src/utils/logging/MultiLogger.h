@@ -1,7 +1,7 @@
 #ifndef MULTILOGGER_H
 #define MULTILOGGER_H
 
-#include "Logger.h"
+#include "utils/Logger.h"
 
 #define MAX_LOGGERS 2
 

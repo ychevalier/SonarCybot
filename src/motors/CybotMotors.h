@@ -1,7 +1,7 @@
 #ifndef CYBOTMOTORS_H
 #define CYBOTMOTORS_H
 
-#include "actuator.h"
+#include "framework/actuator.h"
 
 class CybotMotors : public Actuator {
 public:
