@@ -36,7 +36,7 @@
 
 #endif
 
-#ifdef ARDUINO_BOARD
+#ifdef ARDUINO_THINGY
 
 #define TRIG 1
 #define ECHO_LEFT 2
